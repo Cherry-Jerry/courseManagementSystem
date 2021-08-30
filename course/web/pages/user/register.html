@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>注册-cyj的选课系统</title>
+    <base href="http://localhost:8080/course/">
+    <script type="text/javascript" src="static/script/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //验证用户名是否可用
+            $("#username").blur(function () {
+                var username = $("#username").val();
+                $.getJSON("userServlet","action=existsUsername&username="+username,function (data) {
+                    if (data.existsUsername) {
+                        $("#errorMsg").text("用户名已存在,请重新输入！");
+                        $("#username").val("");
+                    } else if (username!="") {
+                        $("#errorMsg").text("用户名可用！");
+                    }
+                })
+            })
+
+            $("#register_btn").click(function () {
+                let patt = /^\w{4,12}$/;
+                let usernameText = $("#username").val();
+                let passwordText = $("#password").val();
+                let passwordForCheckText = $("#passwordForCheck").val();
+                //验证用户名是合法
+                if (!patt.test(usernameText)) {
+                    $("span.errorMsg").text("用户名不合法");
+                    return false;
+                }
+                //验证密码是合法
+                if (!patt.test(passwordText)) {
+                    $("span.errorMsg").text("密码不合法");
+                    return false;
+                }
+                //验证两次密码是否相同
+                if(passwordText != passwordForCheckText){
+                    $("span.errorMsg").text("密码不相同");
+                    return false;
+                }
+                //注册
+                $.getJSON("userServlet","action=register&"+$("#registerForm").serialize(),function (data) {
+                    if (data.registerSuccess) {
+                        $("span.errorMsg").text("注册成功！");
+                        window.location.href = "pages/user/login.html";
+                    } else {
+                        $("span.errorMsg").text("注册失败！");
+                        $("#username").val("");
+                        $("#password").val("");
+                        $("#passwordForCheck").val("");
+                    }
+                })
+            })
+
+            $("#gotoLogin_btn").click(function () {
+                window.location.href = "pages/user/login.html";
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="text" style=" text-align:center;">
+    <div>
+    <h1>欢迎使用cyj的选课系统</h1>
+    </div>
+    <div class="msg_cont">
+        <b><span id="errorMsg" class="errorMsg" style="color: darkred">输入用户名和确认密码进行注册</span></b>
+    </div>
+    <div id="registerForm">
+        <form action="/course/userServlet" method="post">
+            <input type="hidden" name="action" value="register">
+            <label>用户名称：
+                <input  type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" id="username"/>
+            </label>
+            <br/>
+            <br/>
+            <label>用户密码：
+            <input  type="password" placeholder="请输入密码" autocomplete="off" tabindex="1" name="password" id="password"/>
+            </label>
+            <br/>
+            <label>确认密码：
+            <input  type="password" placeholder="请输入密码" autocomplete="off" tabindex="1" name="password"
+                   id="passwordForCheck"/>
+            </label>
+            <br/>
+            <br/>
+        </form>
+        <input type="submit" value="确认" id="register_btn"/>
+        <input type="submit" value="返回" id="gotoLogin_btn"/>
+    </div>
+</div>
+
+</body>
+</html>

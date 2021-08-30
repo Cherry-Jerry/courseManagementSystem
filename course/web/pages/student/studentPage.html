@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>选课-cyj的选课系统</title>
+    <base href="http://localhost:8080/course/">
+    <style>
+        table{ border-collapse:collapse; border:solid 1px Black; }
+        table td{ width:50px; height:20px;  border:solid 1px Black; padding:5px;}
+    </style>
+    <script type="text/javascript" src="static/script/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="static/script/student/choose-course.js"></script>
+    <script type="text/javascript" src="static/script/student/show-notice.js"></script>
+    <script>
+        $(function () {
+            $("#chooseCourse").click(function () {
+                $("#noticeTable").empty();
+                showSelected();
+                showCourses();
+                return false;
+            })
+
+            $("#showNotice").click(showNotice);
+
+            $("#logout").click(function () {
+                alert("退出登录");
+                $.getJSON("userServlet","action=logout",function () {
+                    window.location.href = "pages/user/login.html";
+                });
+                return false;
+            })
+        })
+
+
+    </script>
+</head>
+<body>
+<div id="header">
+    <h1>
+        <span class="wel_word">学生选课系统</span>
+    </h1>
+    <div>
+        <input type="button" value="选择课程" id="chooseCourse">
+        <input type="button" value="查看通知" id="showNotice">
+        <input type="button" value="退出登录" id="logout">
+    </div>
+</div>
+<hr>
+<div>
+    <table id="noticeTable">
+    </table>
+</div>
+<div>
+    <table id="selectedTable">
+    </table>
+</div>
+<br>
+<div>
+    <table id="chooseTable">
+    </table>
+</div>
+</body>
+</html>

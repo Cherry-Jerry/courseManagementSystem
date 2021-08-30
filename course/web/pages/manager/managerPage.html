@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>管理-cyj的选课系统</title>
+    <base href="http://localhost:8080/course/">
+    <style>
+        table{ border-collapse:collapse; border:solid 1px Black; }
+        table td{ width:50px; height:20px;  border:solid 1px Black; padding:5px;}
+    </style>
+    <script type="text/javascript" src="static/script/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="static/script/manager/edit-user.js"></script>
+    <script type="text/javascript" src="static/script/manager/edit-course.js"></script>
+    <script>
+        $(function () {
+
+            let notice = function () {
+                let $form = $("#form");
+                $form.empty();
+                $("#table").empty();
+                let $sendingForm = $(
+                    "<table>\n" +
+                    "   <tr><td colspan='3'>信息发送栏</td></tr>\n" +
+                    "   <tr>\n" +
+                    "       <td>发送到：</td>\n" +
+                    "       <td>信息</td>\n" +
+                    "       <td>操作</td>\n" +
+                    "   </tr>\n" +
+                    "   <tr>\n" +
+                    "       <td>\n" +
+                    "           <select name='receiver'>\n" +
+                    "               <option value='student'>student</option>\n" +
+                    "           </select>\n" +
+                    "       </td>\n" +
+                    "       <td><input type=\"text\" id=\"msg\" name='msg'></td>\n" +
+                    "       <td><input type=\"button\" id=\"send\" value=\"发布\"></td>\n" +
+                    "   </tr>\n" +
+                    "</table>"
+                )
+                $sendingForm.appendTo($form);
+
+                $("#send").click(function () {
+                    $.getJSON("messageServlet","action=sendMessage&"+$form.serialize(),function (data) {
+                        alert(data.msg);
+                    })
+                    // ？防止事件冒泡，表单提交
+                    return false;
+                })
+
+
+            }
+
+            // 用户管理模块
+            $("#manageUser").click(showUsers);
+            // 课程管理模块
+            $("#manageCourse").click(getCourses);
+            //信息发布模块
+            $("#notice").click(notice);
+            //退出登录
+            $("#logout").click(function () {
+                alert("退出登录");
+                $.getJSON("userServlet","action=logout",function () {
+                    window.location.href = "pages/user/login.html";
+                })
+            })
+        })
+
+
+    </script>
+</head>
+<body>
+<div id="header">
+    <h1>
+        <span class="wel_word">后台管理系统</span>
+    </h1>
+    <div>
+        <input type="button" value="用户管理" id="manageUser">
+        <input type="button" value="课程管理" id="manageCourse">
+        <input type="button" value="信息发布" id="notice">
+        <input type="button" value="退出登录" id="logout">
+    </div>
+</div>
+<hr>
+<div>
+    <form id="form">
+    </form>
+</div>
+<br>
+<div>
+    <table id="table">
+    </table>
+</div>
+</body>
+</html>

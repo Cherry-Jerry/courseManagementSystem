@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>登录-cyj的选课系统</title>
+    <base href="http://localhost:8080/course/">
+    <script type="text/javascript" src="static/script/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#login_btn").click(function () {
+                let patt = /^\w{4,12}$/;
+                //验证用户名是合法
+                let usernameText = $("#username").val();
+                let passwordText = $("#password").val();
+                if (!patt.test(usernameText)) {
+                    $("span.errorMsg").text("用户名不合法");
+                    return false;
+                }
+                //验证密码是合法
+                if (!patt.test(passwordText)) {
+                    $("span.errorMsg").text("密码不合法");
+                    return false;
+                }
+                //密码和账号是否匹配
+                $.getJSON("userServlet","action=login&"+$("#loginForm").serialize(),function (data) {
+                    if (data.loginSuccess) {
+                        $("#errorMsg").text("登录成功！")
+                        if ("student" === data.loginUser.identity) {
+                            window.location.href = "pages/student/studentPage.html";
+                        }
+                        if ("admin" === data.loginUser.identity) {
+                            window.location.href = "pages/manager/managerPage.html";
+                        }
+                        if ("teacher" === data.loginUser.identity) {
+                            window.location.href = "pages/teacher/teacherPage.html";
+                        }
+                        return false;
+                    } else {
+                        $("#errorMsg").text("用户名或密码错误！")
+                        $("#username").val(data.username);
+                        return false;
+                    }
+                })
+
+            })
+
+            $("#gotoRegister_btn").click(function () {
+                window.location.href = "pages/user/register.html";
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="text" style="text-align:center;">
+    <div>
+        <h1>欢迎使用cyj的选课系统</h1>
+    </div>
+    <div class="msg_cont">
+        <b><span id="errorMsg" class="errorMsg" style="color: darkred">请输入用户名和密码</span></b>
+    </div>
+    <div class="form">
+        <form id="loginForm">
+            <label>用户名称：
+            <input  type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" id="username" />
+            </label>
+            <br/>
+            <br/>
+            <label>用户密码：
+            <input  type="password" placeholder="请输入密码" autocomplete="off" tabindex="1" name="password" id="password"/>
+            </label>
+            <br/>
+            <br/>
+        </form>
+        <input type="submit" value="登录" id="login_btn"/>
+        <input type="submit" value="注册" id="gotoRegister_btn"/>
+    </div>
+</div>
+</body>
+</html>
