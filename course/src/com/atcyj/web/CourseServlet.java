@@ -5,8 +5,10 @@ import com.atcyj.pojo.Learn;
 import com.atcyj.pojo.User;
 import com.atcyj.service.CourseService;
 import com.atcyj.service.LearnService;
+import com.atcyj.service.TimeService;
 import com.atcyj.service.impl.CourseServiceImpl;
 import com.atcyj.service.impl.LearnServiceImpl;
+import com.atcyj.service.impl.TimeServiceImpl;
 import com.atcyj.utils.WebUtils;
 import com.google.gson.Gson;
 
@@ -21,6 +23,7 @@ public class CourseServlet extends BaseServlet{
 
     private CourseService courseService = new CourseServiceImpl();
     private LearnService learnService = new LearnServiceImpl();
+    private TimeService timeService = new TimeServiceImpl();
 
     public void courseList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Course> courses = courseService.getAllCourse();
@@ -118,7 +121,12 @@ public class CourseServlet extends BaseServlet{
             resultMap.put("errorMsg","学生或课程不存在！");
             return resultMap;
         }
-        //课程是否已选择
+        // 是否在选课时间内
+        if (timeService.isBeforeOpenTime()) {
+            resultMap.put("errorMsg","现在不是选课时间！");
+            return resultMap;
+        }
+        // 课程是否已选择
         if (learnService.existRecord(student,course)) {
             resultMap.put("errorMsg","课程["+course.getCourseName()+"]已选择！");
             return resultMap;

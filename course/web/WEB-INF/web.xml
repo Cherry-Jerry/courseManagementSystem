@@ -40,4 +40,14 @@
         <url-pattern>/messageServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>TimeServlet</servlet-name>
+        <servlet-class>com.atcyj.web.TimeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TimeServlet</servlet-name>
+        <url-pattern>/timeServlet</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
