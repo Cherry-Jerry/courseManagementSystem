@@ -3,32 +3,34 @@ package com.atcyj.service.impl;
 import com.atcyj.dao.CourseDao;
 import com.atcyj.dao.impl.CourseDaoImpl;
 import com.atcyj.pojo.Course;
-import com.atcyj.pojo.User;
 import com.atcyj.service.CourseService;
 
 import java.util.List;
 
+/**
+ * @author chenyujie
+ */
 public class CourseServiceImpl implements CourseService {
 
     CourseDao courseDao = new CourseDaoImpl();
 
     @Override
-    public int addCourse(Course course) {
-        return courseDao.addCourse(course);
+    public void addCourse(Course course) {
+        courseDao.addCourse(course);
     }
 
     @Override
-    public int deleteCourseById(String id) {
-        return courseDao.deleteUserById(id);
+    public void deleteCourseById(Integer id) {
+        courseDao.deleteUserById(id);
     }
 
     @Override
-    public int updateCourse(Course course) {
-        return courseDao.updateCourse(course);
+    public void updateCourse(Course course) {
+        courseDao.updateCourse(course);
     }
 
     @Override
-    public Course getCourseById(String id) {
+    public Course getCourseById(Integer id) {
         return courseDao.queryCourseById(id);
     }
 
@@ -39,25 +41,20 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Boolean isAllSelected(Course course) {
-        course = courseDao.queryCourseById(course.getId().toString());
+        course = courseDao.queryCourseById(course.getId());
         return course.getSelected() >= course.getPlaces();
     }
 
     @Override
-    public void learn(User user, Course course) {
-
-    }
-
-    @Override
-    public int selectedPlusOne(Course course) {
+    public void selectedPlusOne(Course course) {
         Integer selected = course.getSelected();
         selected++;
         course.setSelected(selected);
-        return courseDao.updateCourse(course);
+        courseDao.updateCourse(course);
     }
 
     @Override
-    public int selectedSubtractOne(Course course) {
+    public void selectedSubtractOne(Course course) {
         Integer selected = course.getSelected();
         if (selected <= 0) {
             selected =0;
@@ -65,6 +62,6 @@ public class CourseServiceImpl implements CourseService {
             selected--;
         }
         course.setSelected(selected);
-        return courseDao.updateCourse(course);
+        courseDao.updateCourse(course);
     }
 }

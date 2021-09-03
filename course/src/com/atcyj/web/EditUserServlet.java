@@ -32,7 +32,7 @@ public class EditUserServlet extends BaseServlet {
     }
 
     public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        userService.deleteUserById(request.getParameter("id"));
+        userService.deleteUserById(Integer.parseInt(request.getParameter("id")));
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("deleteUserSuccess",true);
 

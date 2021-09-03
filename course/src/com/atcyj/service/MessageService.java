@@ -15,10 +15,9 @@ public interface MessageService {
      * @param sender 发送者
      * @param receiver 接收者
      * @param msg 信息
-     * @return 发送信息数
      */
 
-    int sendMessage(User sender, User receiver, String msg);
+    void sendMessage(User sender, User receiver, String msg);
 
     /**
      * 查询收到的信息

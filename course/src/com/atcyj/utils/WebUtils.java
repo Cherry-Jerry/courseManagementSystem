@@ -19,6 +19,7 @@ public class WebUtils {
                 continue;
             }
             try {
+                // @todo getMethod 的参数不一定是string类型
                 Method method = bean.getClass().getMethod(methodName,String.class);
                 method.invoke(bean,entry.getValue()[0]);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {

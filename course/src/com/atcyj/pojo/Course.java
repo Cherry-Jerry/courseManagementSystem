@@ -1,5 +1,8 @@
 package com.atcyj.pojo;
 
+/**
+ * @author chenyujie
+ */
 public class Course {
     private Integer id;
     private String courseName;
@@ -23,10 +26,6 @@ public class Course {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setId(String id) {
-        this.id = Integer.parseInt(id);
     }
 
     public String getCourseName() {
@@ -53,20 +52,12 @@ public class Course {
         this.places = places;
     }
 
-    public void setPlaces(String places) {
-        this.places = Integer.parseInt(places);
-    }
-
     public Integer getSelected() {
         return selected;
     }
 
     public void setSelected(Integer selected) {
         this.selected = selected;
-    }
-
-    public void setSelected(String selected) {
-        this.selected = Integer.parseInt(selected);
     }
 
     @Override

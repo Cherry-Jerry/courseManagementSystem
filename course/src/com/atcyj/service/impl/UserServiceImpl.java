@@ -4,12 +4,14 @@ import com.atcyj.dao.UserDao;
 import com.atcyj.dao.impl.UserDaoImpl;
 import com.atcyj.pojo.User;
 import com.atcyj.service.UserService;
-
 import java.util.List;
 
+/**
+ * @author chenyujie
+ */
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao = new UserDaoImpl();
+    UserDao userDao = new UserDaoImpl();
 
     @Override
     public void registerUser(User user) {
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean existsUsername(String username) {
-        return !(userDao.queryUserByUsername(username) == null);
+        return userDao.queryUserByUsername(username) != null;
     }
 
     @Override
@@ -36,24 +38,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(String id) {
+    public User getUserById(Integer id) {
         return userDao.queryUserById(id);
     }
 
     @Override
     public String getUsernameById(Integer id) {
-        User user = userDao.queryUserById(id.toString());
+        User user = userDao.queryUserById(id);
         return user.getUsername();
     }
 
     @Override
-    public int deleteUserById(String id) {
-        return userDao.deleteUserById(id);
+    public void deleteUserById(Integer id) {
+        userDao.deleteUserById(id);
     }
 
     @Override
-    public int updateUser(User user) {
-        return userDao.updateUser(user);
+    public void updateUser(User user) {
+        userDao.updateUser(user);
     }
 
     @Override

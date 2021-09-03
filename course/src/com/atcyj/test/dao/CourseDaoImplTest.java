@@ -7,33 +7,31 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CourseDaoTest {
+public class CourseDaoImplTest {
     CourseDao courseDao = new CourseDaoImpl();
-
+    Course course = new Course(7,"testCourse","this course is used to test",80,0);
     @Test
     public void addCourse() {
-        courseDao.addCourse(new Course(null,"计算机","学计算机",50,0));
+        courseDao.addCourse(course);
     }
 
     @Test
     public void deleteUserById() {
-        courseDao.deleteUserById("34");
+        courseDao.deleteUserById(7);
     }
 
     @Test
     public void updateCourse() {
-        courseDao.updateCourse(new Course(4,"计算机","computer",75,0));
+        courseDao.updateCourse(course);
     }
 
     @Test
     public void queryCourseById() {
-        String id = "2";
-        System.out.println(courseDao.queryCourseById(id));
+        System.out.println(courseDao.queryCourseById(7));
     }
 
     @Test
     public void queryAllCourse() {
         System.out.println(courseDao.queryAllCourse());
     }
-
 }

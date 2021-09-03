@@ -6,34 +6,37 @@ import com.atcyj.pojo.User;
 
 import java.util.List;
 
-public class LearnDaoImpl extends BaseDao implements LearnDao {
+/**
+ * @author chenyujie
+ */
+public class LearnDaoImpl extends BaseDaoImpl implements LearnDao {
     @Override
     public int add(Integer courseId, Integer studentId) {
-        String sql = "insert into t_learn (courseId,studentId) value(?,?)";
-        return update(sql,courseId.toString(),studentId.toString());
+        String sql = "insert into t_learn (course_id,student_id) value(?,?)";
+        return manipulate(sql,courseId,studentId);
     }
 
     @Override
     public int delete(Integer courseId, Integer studentId) {
-        String sql = "delete from t_learn where courseId=? and studentId=?";
-        return update(sql,courseId.toString(),studentId.toString());
+        String sql = "delete from t_learn where course_id=? and student_id=?";
+        return manipulate(sql,courseId,studentId);
     }
 
     @Override
     public Learn queryRecord(Integer courseId, Integer studentId) {
-        String sql = "select * from t_learn where courseId=? and studentId=?";
-        return queryForOne(Learn.class,sql, courseId.toString(), studentId.toString());
+        String sql = "select * from t_learn where course_id=? and student_id=?";
+        return queryForOne(Learn.class,sql, courseId, studentId);
     }
 
     @Override
     public int selectedCourseNumber(Integer studentId) {
-        String sql = "select count(*) from t_learn where studentId=?";
-        return Integer.parseInt(queryForSingleValue(sql,studentId.toString()));
+        String sql = "select count(*) from t_learn where student_id=?";
+        return (int) queryForSingleValue(sql,studentId);
     }
 
     @Override
     public List<Learn> queryLearnByStudentId(Integer studentId) {
-        String sql = "select * from t_learn where studentId=?";
-        return queryForList(Learn.class,sql,studentId.toString());
+        String sql = "select * from t_learn where student_id=?";
+        return queryForList(Learn.class,sql,studentId);
     }
 }

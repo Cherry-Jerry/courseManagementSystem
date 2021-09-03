@@ -39,6 +39,6 @@ public class UserServiceImplTest {
 
     @Test
     public void getUserById() {
-        System.out.println(userService.getUserById("5"));
+        System.out.println(userService.getUserById(5));
     }
 }

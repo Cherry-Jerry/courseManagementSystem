@@ -12,10 +12,13 @@ import com.atcyj.service.LearnService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author chenyujie
+ */
 public class LearnServiceImpl implements LearnService {
     LearnDao learnDao = new LearnDaoImpl();
     CourseDao courseDao =new CourseDaoImpl();
-    private final Integer maxCourseNumber = 3;
+    Integer maxCourseNumber = 3;
     @Override
     public void addRecord(User student, Course course) {
         learnDao.add(course.getId(),student.getId());
@@ -46,7 +49,7 @@ public class LearnServiceImpl implements LearnService {
         List<Learn> learns = learnDao.queryLearnByStudentId(student.getId());
         List<Course> courses = new ArrayList<>();
         for (Learn learn :learns) {
-            Course course = courseDao.queryCourseById(learn.getCourseId().toString());
+            Course course = courseDao.queryCourseById(learn.getCourseId());
             courses.add(course);
         }
         return courses;

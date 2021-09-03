@@ -68,7 +68,7 @@ public class UserServlet extends BaseServlet {
     }
 
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        Integer id = Integer.parseInt(request.getParameter("id"));
         User user = userService.getUserById(id);
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("user",user);

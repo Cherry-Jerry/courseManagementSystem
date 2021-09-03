@@ -1,5 +1,8 @@
 package com.atcyj.pojo;
 
+/**
+ * @author chenyujie
+ */
 public class Learn {
     private Integer courseId;
     private Integer studentId;

@@ -2,34 +2,34 @@ package com.atcyj.dao.impl;
 
 import com.atcyj.dao.CourseDao;
 import com.atcyj.pojo.Course;
-import com.atcyj.pojo.User;
-
 import java.util.List;
 
-
-public class CourseDaoImpl extends BaseDao implements CourseDao {
+/**
+ * @author chenyujie
+ */
+public class CourseDaoImpl extends BaseDaoImpl implements CourseDao {
 
     @Override
     public int addCourse(Course course) {
-        String sql = "insert into t_course (courseName,information,places,selected) value(?,?,?,?)";
-        return update(sql,course.getCourseName(),course.getInformation(),course.getPlaces().toString(),course.getSelected().toString());
+        String sql = "insert into t_course (course_name,information,places,selected) value(?,?,?,?)";
+        return manipulate(sql,course.getCourseName(),course.getInformation(),course.getPlaces(),course.getSelected());
     }
 
     @Override
-    public int deleteUserById(String id) {
+    public int deleteUserById(Integer id) {
         String sql = "delete from t_course where id=?";
-        return update(sql,id);
+        return manipulate(sql,id);
     }
 
     @Override
     public int updateCourse(Course course) {
-        String sql = "update t_course set courseName =?,information=?,places=?,selected=? where id=?";
-        return update(sql,course.getCourseName(),course.getInformation(),
-                course.getPlaces().toString(),course.getSelected().toString(),course.getId().toString());
+        String sql = "update t_course set course_name =?,information=?,places=?,selected=? where id=?";
+        return manipulate(sql,course.getCourseName(),course.getInformation(),
+                course.getPlaces(),course.getSelected(),course.getId());
     }
 
     @Override
-    public Course queryCourseById(String id) {
+    public Course queryCourseById(Integer id) {
         String sql = "select * from t_course where id = ?";
         return queryForOne(Course.class,sql,id);
     }

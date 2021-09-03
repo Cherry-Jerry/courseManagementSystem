@@ -42,7 +42,7 @@ public class CourseServlet extends BaseServlet{
     }
 
     public void getCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        Integer id = Integer.parseInt(request.getParameter("id"));
         Course course = courseService.getCourseById(id);
         Map<String,Object> resultMap = new HashMap<>(16);
         resultMap.put("course",course);
@@ -75,7 +75,7 @@ public class CourseServlet extends BaseServlet{
     }
 
     public void deleteCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        courseService.deleteCourseById(request.getParameter("id"));
+        courseService.deleteCourseById(Integer.parseInt(request.getParameter("id")));
         Map<String,Object> resultMap = new HashMap<>(16);
         resultMap.put("deleteCourseSuccess",true);
 
@@ -98,7 +98,7 @@ public class CourseServlet extends BaseServlet{
 
     public void learnBy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 获取选课信息
-        String courseId = request.getParameter("courseId");
+        Integer courseId = Integer.parseInt(request.getParameter("courseId"));
         User student = (User)request.getSession().getAttribute("loginUser");
         Course course = courseService.getCourseById(courseId);
         // 判断选课申请是否符合要求
@@ -153,7 +153,7 @@ public class CourseServlet extends BaseServlet{
     }
 
     public void cancelSelected(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String courseId = request.getParameter("courseId");
+        Integer courseId = Integer.parseInt(request.getParameter("courseId"));
         Course course = courseService.getCourseById(courseId);
         User student = (User)request.getSession().getAttribute("loginUser");
         Map<String,Object> resultMap = new HashMap<>(16);

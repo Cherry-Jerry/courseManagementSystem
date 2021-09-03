@@ -1,5 +1,7 @@
 package com.atcyj.pojo;
-
+/**
+ * @author chenyujie
+ */
 public class User {
     private Integer id;
     private String username;
@@ -33,10 +35,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setId(String id) {
-        this.id = Integer.parseInt(id);
     }
 
     public String getUsername() {
