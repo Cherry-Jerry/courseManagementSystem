@@ -48,7 +48,7 @@ var addCourse =function () {
     let $updateTable = $(
         "<table>\n" +
         "   <tr>\n" +
-        "    <td><input readonly=\"readonly\" name=\"id\" type=\"text\" value=\"id\"/></td>\n" +
+        "    <td><input readonly=\"readonly\"  type=\"text\" value=\"id\"/></td>\n" +
         "    <td><input name=\"courseName\" type=\"text\" value=\"课程名\"/></td>\n" +
         "    <td><input name=\"information\" type=\"text\" value=\"课程信息\"/></td>\n" +
         "    <td><input name=\"places\" type=\"text\" value=\"开课人数\"/></td>\n" +

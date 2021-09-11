@@ -1,4 +1,4 @@
-package com.atcyj.utils.pool;
+package com.atcyj.utils.pool.jdbc;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class MyDataSourceImpl implements MyDataSource{
 
-    private List<Connection> freeConnections = new ArrayList<>();
-    private List<Connection> busyConnections = new ArrayList<>();
-    private Object monitor = new Object();
+    private final List<Connection> freeConnections = new ArrayList<>();
+    private final List<Connection> busyConnections = new ArrayList<>();
+    private final Object monitor = new Object();
 
     @Override
     public Connection getConnection() {
@@ -23,14 +23,13 @@ public class MyDataSourceImpl implements MyDataSource{
         int poolTimeToWait = 30000;
 
         Connection proxyConnection = null;
-        Boolean waitOutTime = false;
+        boolean waitOutTime = false;
 
         synchronized (monitor){
             if (freeConnections.isEmpty()) {
                 if (busyConnections.size() < maxPoolConnectionsNumber) {
-                    // 没有空闲连接，且连接数没达到连接池的最大连接数量上限，则新建一个连接并使用
-
-
+                    // 没有空闲连接，且连接数没达到连接池的最大连接数量上限，则新建一个连接放在空闲集
+                    freeConnections.add(activeConnection());
                 } else {
                     // 等待空闲连接的出现，等待超时则不再尝试连接
                     try {
@@ -46,10 +45,13 @@ public class MyDataSourceImpl implements MyDataSource{
                 // 从空闲连接集中获取第一个连接
                 proxyConnection = freeConnections.remove(0);
             }
-            // 把该链接放到占线连接集
-            busyConnections.add(proxyConnection);
-        }
 
+            if (proxyConnection != null) {
+                // 把该链接放到占线连接集
+                busyConnections.add(proxyConnection);
+            }
+        }
+        System.out.println("从MyDataSourceImpl中获取连接 freeConnections.size()="+freeConnections.size());
         return proxyConnection;
     }
 
@@ -69,7 +71,12 @@ public class MyDataSourceImpl implements MyDataSource{
                 e.printStackTrace();
             }
         }
-        notifyAll();
+
+        synchronized (monitor){
+             monitor.notifyAll();
+            System.out.println("其它线程可以再次尝试连接了");
+        }
+        System.out.println("把连接还给了MyDataSourceImpl freeConnections.size()="+freeConnections.size());
     }
 
     @Override

@@ -52,7 +52,7 @@ var chooseCourse = function () {
     return false;
 }
 var showInfo =function () {
-    alert("展示信息2");
+    alert("查看了更多关于该课程的信息");
     return false;
 }
 

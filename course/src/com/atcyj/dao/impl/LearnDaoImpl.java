@@ -31,7 +31,7 @@ public class LearnDaoImpl extends BaseDaoImpl implements LearnDao {
     @Override
     public int selectedCourseNumber(Integer studentId) {
         String sql = "select count(*) from t_learn where student_id=?";
-        return (int) queryForSingleValue(sql,studentId);
+        return Integer.parseInt(String.valueOf(queryForSingleValue(sql,studentId)));
     }
 
     @Override

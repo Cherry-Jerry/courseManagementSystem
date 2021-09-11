@@ -52,7 +52,7 @@ var addUser =function () {
     let $updateTable = $(
         "<table>\n" +
         "    <tr>\n" +
-        "        <td><input readonly=\"readonly\" name=\"id\" type=\"text\" value=\"id\"/></td>\n" +
+        "        <td><input readonly=\"readonly\"  type=\"text\" value=\"id\"/></td>\n" +
         "        <td><input name=\"username\" type=\"text\" value=\"用户名\" /></td>\n" +
         "        <td><input name=\"password\" type=\"text\" value=\"密码\" /></td>\n" +
         "        <td><input name=\"identity\" type=\"text\" value=\"身份\" /></td>\n" +

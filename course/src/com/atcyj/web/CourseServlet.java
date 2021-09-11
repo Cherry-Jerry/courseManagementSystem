@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author chenyujie
+ */
 public class CourseServlet extends BaseServlet{
 
     private CourseService courseService = new CourseServiceImpl();
@@ -86,7 +89,6 @@ public class CourseServlet extends BaseServlet{
 
     public void updateCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Course course = WebUtils.copyParamToBean(request.getParameterMap(), new Course());
-        System.out.println(course);
         courseService.updateCourse(course);
         Map<String,Object> resultMap = new HashMap<>(16);
         resultMap.put("updateCourseSuccess",true);

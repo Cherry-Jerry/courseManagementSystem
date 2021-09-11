@@ -1,6 +1,5 @@
 package com.atcyj.utils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 

@@ -68,9 +68,8 @@
     <div class="msg_cont">
         <b><span id="errorMsg" class="errorMsg" style="color: darkred">输入用户名和确认密码进行注册</span></b>
     </div>
-    <div id="registerForm">
-        <form action="/course/userServlet" method="post">
-            <input type="hidden" name="action" value="register">
+    <div>
+        <form id="registerForm" action="userServlet" method="post">
             <label>用户名称：
                 <input  type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" id="username"/>
             </label>
@@ -81,7 +80,7 @@
             </label>
             <br/>
             <label>确认密码：
-            <input  type="password" placeholder="请输入密码" autocomplete="off" tabindex="1" name="password"
+            <input  type="password" placeholder="请输入密码" autocomplete="off" tabindex="1"
                    id="passwordForCheck"/>
             </label>
             <br/>
